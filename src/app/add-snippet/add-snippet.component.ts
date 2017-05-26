@@ -27,6 +27,7 @@ export class AddSnippetComponent implements OnInit {
 							.subscribe(
 								snippet => this.snippets.push(snippet),
 								error => this.errorMessage = <any> error);
+		this.location.back();
 	}
 
 	goBack(): void {
