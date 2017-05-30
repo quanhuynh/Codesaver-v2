@@ -28,6 +28,14 @@ export class SnippetService {
 							.catch(this.handleError);
 	}
 
+	remove(nickname: string) {
+		let headers = new Headers({'Content-Type': 'application/json'});
+		let options = new RequestOptions({headers: headers});
+		return this.http.delete(`${this.snippetsUrl}/${nickname}`, options)
+							.map(this.extractData)
+							.catch(this.handleError);
+	}
+
 	getSnippet(nickname: string) {
 		return this.getSnippets().map(snippets => snippets.find(snippet => snippet.nickname == nickname));
 	}
