@@ -23,7 +23,6 @@ export class SnippetDetailsComponent implements OnInit {
 		private location: Location) {}
 
 	ngOnInit(): void {
-		console.log(this.route.params);
 		this.route.params
 			.switchMap((params: Params) => this.snippetService.getSnippet(params['nickname']))
 			.subscribe((snippet: Snippet) => this.snippet = snippet);
@@ -38,11 +37,9 @@ export class SnippetDetailsComponent implements OnInit {
 
 	deleteSnippet() {
 		if (!this.snippet) {return;}
-		console.log(this.snippets);
-		this.snippetService.remove(this.snippet.nickname)
-							.subscribe(snippet => this.snippets.splice(this.snippets.findIndex(this.isEqual, 1)),
+		this.snippetService.remove(this.snippet)
+							.subscribe(snippets => this.snippets = snippets,
 										error => this.errorMessage = <any> error);
-
 		this.location.back();
 	}
 

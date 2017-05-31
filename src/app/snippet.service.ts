@@ -23,18 +23,20 @@ export class SnippetService {
 	create(nickname: string, language: string, tags: string[], description: string, code: string) {
 		let headers = new Headers({'Content-Type': 'application/json'});
 		let options = new RequestOptions({headers: headers});
-		return this.http.post(this.snippetsUrl, {nickname, language, tags, description, code}, options)
+		let id = Math.floor(Math.random()*Number.MAX_SAFE_INTEGER);
+		return this.http.post(`${this.snippetsUrl}`, {id, nickname, language, tags, description, code}, options)
 							.map(this.extractData)
 							.catch(this.handleError);
 	}
 
-	remove(nickname: string) {
-		let headers = new Headers({'Content-Type': 'application/json'});
-		let options = new RequestOptions({headers: headers});
-		return this.http.delete(`${this.snippetsUrl}/${nickname}`, options)
+	remove(snippet: Snippet) {
+		let retObj = this.http.delete(`${this.snippetsUrl}/${snippet.id}`)
 							.map(this.extractData)
 							.catch(this.handleError);
+		console.log(retObj);
+		return retObj;
 	}
+
 
 	getSnippet(nickname: string) {
 		return this.getSnippets().map(snippets => snippets.find(snippet => snippet.nickname == nickname));

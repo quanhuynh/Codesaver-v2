@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
 		this.snippetService.getSnippets()
 			.subscribe(snippets => this.snippets = snippets,
 						error => this.errorMessage = <any> error);
+
 	}
 
 	onSelect(snippet: Snippet) {
